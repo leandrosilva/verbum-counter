@@ -14,25 +14,35 @@ I use `Node.js` on a regular basis. At work, at home, and whatnot.
 
 I just discovered an amazing tool named [`Neon`](https://github.com/neon-bindings/neon), which really pavels the road to write native `Node.js` modules without friction. So I could not help myself but try my hands on it as soon as I could.
 
-The word count algorithm itself is fairly know by anybody that has got a little education on map-reduce. Nothing new here. However, to speed it up, I brought into the mix the awesome [Rayon](https://github.com/rayon-rs/rayon) crate to get data parallelism right out of the box.
+The word count algorithm itself is fairly known by anybody that has got a little education on map-reduce. Nothing new here. However, to speed it up, I brought into the mix the awesome [Rayon](https://github.com/rayon-rs/rayon) crate to get data parallelism right out of the box.
 
 ## Test
 
 Giving that you already have `Node.js` and `Rust` properly installed, testing this project alone cannot be simpler.
 
-**1) Neon CLI:**
+**1) Get Neon CLI:**
 
 ```
 $ npm install -g neon-cli
 ```
 
-**2) This project:**
+**2) Get this project:**
 
 ```
 $ git clone https://github.com/leandrosilva/verbum-counter.git
+```
+**3) Build this project:**
+
+```
 $ cd verbum-counter
 $ neon build --release
+```
+
+**4) Try it out:**
+
+```
 $ node lib/index.js
+$ node lib/index.js /path/to/a/big/textfile
 ```
 
 That's it. I hope you enjoy it as much as I did.
