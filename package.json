@@ -1,7 +1,8 @@
 {
   "name": "verbum-counter",
   "version": "0.1.0",
-  "description": "Rust servind Node.js to count words on a file",
+  "description": "Rust serving Node.js to count words in text files",
+  "repository": "https://github.com/leandrosilva/verbum-counter.git",
   "main": "lib/index.js",
   "author": "Leandro Silva <leandrodoze@gmail.com>",
   "license": "MIT",
@@ -9,6 +10,6 @@
     "neon-cli": "^0.4.0"
   },
   "scripts": {
-    "install": "neon build"
+    "install": "neon build --release"
   }
 }

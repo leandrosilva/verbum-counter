@@ -35,7 +35,7 @@ $ git clone https://github.com/leandrosilva/verbum-counter.git
 
 ```
 $ cd verbum-counter
-$ neon build --release
+$ npm install
 ```
 
 **4) Try it out:**

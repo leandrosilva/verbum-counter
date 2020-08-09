@@ -71,13 +71,7 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
     // Step #1: map
     let mapped: Vec<_> = words
         .into_par_iter()
-        .map(|word| {
-            word.to_lowercase()
-                .chars()
-                .filter(|c| c.is_alphabetic())
-                .collect::<String>()
-        })
-        .map(|word| (word, ()))
+        .map(|word| (word.to_string(), 1))
         .collect();
 
     // Step #2: group by word
