@@ -1,6 +1,6 @@
+use std::collections::HashMap;
 use neon::prelude::*;
 use rayon::prelude::*;
-use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, Read};
 
@@ -67,17 +67,22 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
     let file_content = read_file_content(&filepath)?;
     let words = file_content.split_whitespace().collect::<Vec<_>>();
 
-    let mut counted: HashMap<&str, u64> = HashMap::new();
-    for word in words {
-        let counter = counted.entry(word).or_insert(0);
+    let counted: Vec<_> = words
+        .into_par_iter()
+        .map(|word| (word, ()))
+        .collect();
+
+    let mut grouped: HashMap<&str, u64> = HashMap::new();
+    for (w, _c) in counted {
+        let counter = grouped.entry(w).or_insert(0);
         *counter += 1;
     }
 
-    let mut sorted: Vec<_> = counted
+    let mut sorted: Vec<_> = grouped
         .into_par_iter()
         .map(|kv| WordCount {
             word: kv.0.to_string(),
-            count: kv.1,
+            count: kv.1 as u64,
         })
         .collect();
     sorted.par_sort_unstable_by(|a, b| b.count.cmp(&a.count));
