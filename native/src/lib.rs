@@ -1,7 +1,6 @@
 use multimap::MultiMap;
 use neon::prelude::*;
 use rayon::prelude::*;
-use std::cmp::Ordering;
 use std::fs::File;
 use std::io::{self, Read};
 
@@ -71,7 +70,7 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
     // Step #1: map
     let mapped: Vec<_> = words
         .into_par_iter()
-        .map(|word| (word.to_string(), 1))
+        .map(|word| (word.to_string(), ()))
         .collect();
 
     // Step #2: group by word
@@ -88,10 +87,7 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
         .collect();
 
     // Step #4: order by most frequent
-    reduced.sort_by(|a, b| match a.1.cmp(&b.1).reverse() {
-        Ordering::Equal => a.0.cmp(&b.0),
-        other_ordering => other_ordering,
-    });
+    reduced.sort_by(|a, b| b.1.cmp(&a.1));
 
     // Step #5: final result
     let result: WordCountResult = reduced
