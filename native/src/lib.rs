@@ -1,12 +1,12 @@
-use multimap::MultiMap;
 use neon::prelude::*;
 use rayon::prelude::*;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, Read};
 
 struct WordCount {
     word: String,
-    count: f64,
+    count: u64,
 }
 
 type WordCountResult = Vec<WordCount>;
@@ -43,7 +43,7 @@ impl Task for WordCountTask {
         wc_result.iter().enumerate().for_each(|e| {
             let (i, wc) = e;
             let js_string = cx.string(&wc.word);
-            let js_number = cx.number(wc.count);
+            let js_number = cx.number(wc.count as f64);
             let js_object = JsObject::new(&mut cx);
             js_object.set(&mut cx, "word", js_string).unwrap();
             js_object.set(&mut cx, "count", js_number).unwrap();
@@ -67,38 +67,22 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
     let file_content = read_file_content(&filepath)?;
     let words = file_content.split_whitespace().collect::<Vec<_>>();
 
-    // Step #1: map
-    let mapped: Vec<_> = words
-        .into_par_iter()
-        .map(|word| (word.to_string(), ()))
-        .collect();
+    let mut counted: HashMap<&str, u64> = HashMap::new();
+    for word in words {
+        let counter = counted.entry(word).or_insert(0);
+        *counter += 1;
+    }
 
-    // Step #2: group by word
-    let grouped = mapped
-        .into_iter()
-        .collect::<MultiMap<_, _>>()
-        .into_iter()
-        .collect::<Vec<_>>();
-
-    // Step #3: reduce by word
-    let mut reduced: Vec<_> = grouped
-        .into_par_iter()
-        .map(|kv| (kv.0, kv.1.len()))
-        .collect();
-
-    // Step #4: order by most frequent
-    reduced.sort_by(|a, b| b.1.cmp(&a.1));
-
-    // Step #5: final result
-    let result: WordCountResult = reduced
+    let mut sorted: Vec<_> = counted
         .into_par_iter()
         .map(|kv| WordCount {
-            word: kv.0,
-            count: kv.1 as f64,
+            word: kv.0.to_string(),
+            count: kv.1,
         })
         .collect();
+    sorted.par_sort_unstable_by(|a, b| b.count.cmp(&a.count));
 
-    Ok(result)
+    Ok(sorted)
 }
 
 // Helper functions
