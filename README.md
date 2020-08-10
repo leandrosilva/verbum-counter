@@ -41,8 +41,13 @@ $ neon build --release
 **4) Try it out:**
 
 ```
-$ node lib/index.js
-$ node lib/index.js /path/to/a/big/textfile
+$ node lib/wordcount_node.js
+$ node lib/wordcount_node.js /path/to/a/big/textfile
+```
+
+```
+$ node lib/wordcount_rust.js
+$ node lib/wordcount_rust.js /path/to/a/big/textfile
 ```
 
 That's it. I hope you enjoy it as much as I did.
