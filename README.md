@@ -8,7 +8,7 @@ I use `Node.js` on a regular basis. At work, at home, you name it.
 
 `Node.js` is a fantastic platform to write server-side applications with the ubiquitous `JavaScript` language. But it does not count `Node.js` off flaws. In fact, most of us know that `Node.js` is not great for heavy computations that could potentially block its event loop. You block the event loop, you got f*d right away. So people try and bring heavy duty tools to power it up. That's when [`C++` addons](https://nodejs.org/api/addons.html) come into the playground.
 
-`C++` being almighty as it is, it's not that simple to tame without a fair count of scars. Then `Rust` enters the playground too. With `Rust` you have **memory safe** and **fearless concurrency** with little to zero cost and no scars. And as you may guess by now, you can write native `Node.js` modules with `Rust` too. That's cool enough to me.
+`C++` being almighty as it is, it's not that easy to tame without a fair count of scars. Then `Rust` enters the playground too. With `Rust` you have **memory safe** and **fearless concurrency** with little to zero cost and no scars. And as you may guess by now, you can write native `Node.js` modules with `Rust` too. That's cool enough to me.
 
 ## The How
 
@@ -54,6 +54,6 @@ $ node lib/wordcount_rust.js /path/to/a/medium/textfile
 $ node lib/wordcount_rust.js /path/to/a/big/textfile
 ```
 
-As you may note, with small text files plain `Node.js` shines and things start to turn the other way around when files get bigger and bigger. Therefore you should not rush into optimize unless you really need it. And of course, bare in mind that the idea is always let the event loop runs free.
+As you may note, with small text files plain `Node.js` shines and things start to turn the other way around only when files get bigger and bigger. Therefore you should not rush into optimize unless you really need it. And, of course, bare in mind that the idea is always let the event loop runs free.
 
-That's it. I hope you have enjoyed it this tiny experiment as much as I did.
+That's it. I hope you have enjoyed this tiny experiment as much as I did.
