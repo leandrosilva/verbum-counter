@@ -4,7 +4,7 @@ This is an implementation of word counting with `Rust` serving `Node.js`.
 
 ## The Why
 
-I use `Node.js` on a regular basis. At work, at home, and whatnot.
+I use `Node.js` on a regular basis. At work, at home, you name it.
 
 `Node.js` is a fantastic platform to write server-side applications with the ubiquitous `JavaScript` language. But it does not count `Node.js` off flaws. In fact, most of us know that `Node.js` is not great for heavy computations that could potentially block its event loop. You block the event loop, you got f*d right away. So people try and bring heavy duty tools to power it up. That's when [`C++` addons](https://nodejs.org/api/addons.html) come into the playground.
 
@@ -42,12 +42,18 @@ $ neon build --release
 
 ```
 $ node lib/wordcount_node.js
+$ node lib/wordcount_node.js /path/to/a/small/textfile
+$ node lib/wordcount_node.js /path/to/a/medium/textfile
 $ node lib/wordcount_node.js /path/to/a/big/textfile
 ```
 
 ```
 $ node lib/wordcount_rust.js
+$ node lib/wordcount_rust.js /path/to/a/small/textfile
+$ node lib/wordcount_rust.js /path/to/a/medium/textfile
 $ node lib/wordcount_rust.js /path/to/a/big/textfile
 ```
 
-That's it. I hope you enjoy it as much as I did.
+As you may note, with small text files plain `Node.js` shines and things start to turn the other way around when files get bigger and bigger. Therefore you should not rush into optimize unless you really need it. And of course, bare in mind that the idea is always let the event loop runs free.
+
+That's it. I hope you have enjoyed it this tiny experiment as much as I did.
