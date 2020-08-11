@@ -6,7 +6,7 @@ use std::io::{self, Read};
 
 struct WordCount {
     word: String,
-    count: u64,
+    count: usize,
 }
 
 type WordCountResult = Vec<WordCount>;
@@ -67,7 +67,7 @@ fn count_words_sync(filepath: &String) -> Result<WordCountResult, io::Error> {
     let file_content = read_file_content(&filepath)?;
     let words = file_content.split_whitespace().collect::<Vec<_>>();
 
-    let mut counted: HashMap<&str, u64> = HashMap::new();
+    let mut counted: HashMap<&str, usize> = HashMap::new();
     for word in words {
         let counter = counted.entry(word).or_insert(0);
         *counter += 1;
