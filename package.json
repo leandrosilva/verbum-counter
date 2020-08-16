@@ -5,6 +5,10 @@
   "repository": "https://github.com/leandrosilva/verbum-counter.git",
   "main": "lib/index.js",
   "author": "Leandro Silva <leandrodoze@gmail.com>",
+  "keywords": [
+    "rust",
+    "wordcounter"
+  ],
   "license": "MIT",
   "dependencies": {
     "neon-cli": "^0.4.0"
